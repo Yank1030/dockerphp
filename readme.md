@@ -12,7 +12,7 @@ docker-compose up -d
 
 * docker停止
 ```
-docker-compose up -d
+docker-compose down
 
 ```
 
