@@ -5,15 +5,12 @@
      <meta charset="UTF-8">
      <meta name="viewport" content="width=device-width, initial-scale=1.0">
      <title>Twitter風掲示板</title>
-
      <!-- Bootstrap core CSS -->
      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-
  </head>
 
  <body>
-
      <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
          <div class="container-fluid">
              <div class="navbar-header">
@@ -30,19 +27,15 @@
      </nav>
 
      <div class="col-md-3">
-
          <form action="tweet_ins.php" method="GET">
              <br>
              ツイート内容を入力してください。<br>
              <textarea name="contents" cols="40" rows="4"></textarea>
              <br>
-
              <input type="submit" value="ツイート" class="btn btn-primary">
          </form>
      </div>
-
      <div class="col-md-9">
-
          <div class="table-responsive">
              <p>ここにツイートを表示する。</p>
              <table class="table table-striped">
@@ -55,7 +48,7 @@
                  </thead>
                  <tbody>
                      <?php
-                        $link = mysqli_connect('localhost', 'root', 'password', 'mydb');
+                        $link = mysqli_connect('db-host', 'root', 'password', 'mydb');
 
                         if (!$link) {
                             echo "データベース接続失敗" . PHP_EOL;
@@ -66,9 +59,9 @@
                         echo 'データベース接続成功';
 
                         //クエリを実行するためのデフォルトのデータベースを選択
-                        $rs = mysqli_select_db($connect, "mydb");
+                        //mysqli_select_db($link, "mydb"); ← mysqli_connectにすでに入っている
                         //データベース上でクエリを実行
-                        mysqli_query($link, 'SELECT * FROM tweet orderby input_datetime');
+                        $rs = mysqli_query($link, 'SELECT * FROM tweet order by input_datetime');
 
                         while (true) {
                             //取得した行に対応する連想配列を返す
@@ -85,7 +78,7 @@
                         }
 
                         //データベースとの接続を切る
-                        mysqli_close($connect);
+                        mysqli_close($link);
 
 
                         ?>
