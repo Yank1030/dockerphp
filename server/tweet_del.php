@@ -73,7 +73,7 @@
                 </thead>
                 <tbody>
                     <?php
-                    $sql = "select * from tweet order by input_datetime desc";
+                    $sql = "SELECT * from tweet order by input_datetime desc";
                     //echo $sql;
 
                     //この１行で実行

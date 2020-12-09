@@ -63,7 +63,7 @@
 
                     //登録された時間の新しい時間に並べて表示したい
                     //この１行で実行
-                    $rs = mysqli_query("test", 'select * from tweet_tbl order by input_datetime desc');
+                    $rs = mysqli_query($link, 'SELECT * from tweet order by input_datetime desc');
 
                     while (true) {
                         $row = mysqli_fetch_assoc($rs);
@@ -71,7 +71,7 @@
                             break;
                         } else {
                             echo "<tr>";
-                            echo "<td>{$row['account']}</td>";
+                            echo "<td>{$row['name']}</td>";
                             echo "<td>{$row['contents']}</td>";
                             echo "<td>{$row['input_datetime']}</td>";
                             echo "</tr>";

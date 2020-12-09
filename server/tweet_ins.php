@@ -34,7 +34,7 @@
     </nav>
 
     <div class="col-md-3">
-        <form action="tweet_fin.php" method="GET">
+        <form action="tweet_ins.php" method="GET">
             <br>
             ツイート内容を入力してください。<br>
             <textarea name="contents" cols="40" rows="4"></textarea>
@@ -61,7 +61,7 @@
                 echo "文字数オーバーです";
             } else {
                 //testというデータベースに対してSQLを実行する 
-                mysqli_query($link, 'INSERT tweet(name, contents, input_datetime) values("kei",'link',sysdate())');
+                mysqli_query($link, 'INSERT tweet(name, contents, input_datetime)values("kei", "' . $contents . '" , sysdate())');
 
                 echo "ツイートしました";
             }
