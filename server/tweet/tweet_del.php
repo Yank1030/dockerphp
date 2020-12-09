@@ -34,7 +34,6 @@
     </nav>
 
     <div class="col-md-3">
-
         <form action="tweet_ins.php" method="GET">
             <br>
             ツイート内容を入力してください。<br>
@@ -48,34 +47,47 @@
     <div class="col-md-9">
 
         <div class="table-responsive">
-            <p>ここにツイートを表示する。</p>
+            <p>
+                idが
+                <?php
+                echo $_GET['id'];
+
+                $link = mysqli_connect("db-host", "root", "password", "mydb");
+
+                $id = $_GET['id'];
+
+                //この１行で実行
+                mysqli_query($link, "DELETE from tweet where id = $id");
+
+                ?>
+                のデータを削除しました。
+
+            </p>
             <table class="table table-striped">
                 <thead>
                     <tr>
                         <th>名前</th>
                         <th>投稿内容</th>
                         <th>投稿時間</th>
+                        <th>削除</th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php
-                    $link = mysqli_connect("db-host", "root", "password", "mydb");
+                    $sql = "SELECT * from tweet order by input_datetime desc";
+                    //echo $sql;
 
-                    //登録された時間の新しい時間に並べて表示したい
                     //この１行で実行
-                    $rs = mysqli_query($link, 'SELECT * from tweet order by input_datetime desc');
+                    $rs = mysqli_query($link, $sql);
 
-                    while (true) {
-                        $row = mysqli_fetch_assoc($rs);
-                        if ($row == null) {
-                            break;
-                        } else {
-                            echo "<tr>";
-                            echo "<td>{$row['name']}</td>";
-                            echo "<td>{$row['contents']}</td>";
-                            echo "<td>{$row['input_datetime']}</td>";
-                            echo "</tr>";
-                        }
+                    while ($row = mysqli_fetch_assoc($rs)) {
+                        echo "<tr>";
+                        echo "<td>{$row['name']}</td>";
+                        echo "<td>{$row['contents']}</td>";
+                        echo "<td>{$row['input_datetime']}</td>";
+                        $id = $row["id"];
+                        echo "<td><a href='tweet_del.php?id=$id'>削除</a></td>";
+                        echo "</tr>";
                     }
 
                     //データベースとの接続を切る
@@ -83,21 +95,21 @@
 
 
                     ?>
+
                 </tbody>
             </table>
         </div>
     </div>
 
 
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
-    </script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
-    </script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
-    </script>
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="css/dist/js/bootstrap.min.js"></script>
+    <script src="css/assets/js/docs.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="css/assets/js/ie10-viewport-bug-workaround.js"></script>
 </body>
 
 </html>

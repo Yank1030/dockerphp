@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="en">
 
 <head>
     <meta charset="utf-8">
@@ -34,7 +34,6 @@
     </nav>
 
     <div class="col-md-3">
-
         <form action="tweet_ins.php" method="GET">
             <br>
             ツイート内容を入力してください。<br>
@@ -60,13 +59,26 @@
                 </thead>
                 <tbody>
                     <?php
-                    $link = mysqli_connect("db-host", "root", "password", "mydb");
 
-                    //登録された時間の新しい時間に並べて表示したい
-                    //この１行で実行
-                    $rs = mysqli_query($link, "SELECT * from tweet order by input_datetime desc");
+                    $link = mysqli_connect("db-host", "root", "password", "mydb");
+                    $contents = $_GET["contents"];
+
+                    $len = mb_strlen($contents, "utf-8");
+
+                    if ($len == 0) {
+                        echo "空白です";
+                    } else if ($len > 140) {
+                        echo "文字数オーバーです";
+                    } else {
+                        mysqli_query($link, 'INSERT tweet(name, contents, input_datetime)values("kei", "' . $contents . '" , sysdate())');
+                        echo "ツイートしました";
+                    }
+
+
+                    $rs = mysqli_query($link, 'SELECT * FROM tweet order by input_datetime desc');
 
                     while (true) {
+                        //取得した行に対応する連想配列を返す
                         $row = mysqli_fetch_assoc($rs);
                         if ($row == null) {
                             break;
@@ -84,22 +96,12 @@
                     //データベースとの接続を切る
                     mysqli_close($link);
 
-
                     ?>
+
                 </tbody>
             </table>
         </div>
     </div>
-
-
-    <!-- Bootstrap core JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-    <script src="css/dist/js/bootstrap.min.js"></script>
-    <script src="css/assets/js/docs.min.js"></script>
-    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-    <script src="css/assets/js/ie10-viewport-bug-workaround.js"></script>
 </body>
 
 </html>

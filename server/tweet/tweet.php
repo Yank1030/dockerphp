@@ -44,6 +44,7 @@
                          <th>名前</th>
                          <th>投稿内容</th>
                          <th>投稿時間</th>
+                         <th>削除</th>
                      </tr>
                  </thead>
                  <tbody>
@@ -61,7 +62,7 @@
                         //クエリを実行するためのデフォルトのデータベースを選択
                         //mysqli_select_db($link, "mydb"); ← mysqli_connectにすでに入っている
                         //データベース上でクエリを実行
-                        $rs = mysqli_query($link, 'SELECT * FROM tweet order by input_datetime');
+                        $rs = mysqli_query($link, 'SELECT * FROM tweet order by input_datetime desc');
 
                         while (true) {
                             //取得した行に対応する連想配列を返す
@@ -73,14 +74,13 @@
                                 echo "<td>{$row['name']}</td>";
                                 echo "<td>{$row['contents']}</td>";
                                 echo "<td>{$row['input_datetime']}</td>";
+                                $id = $row["id"];
+                                echo "<td><a href='tweet_del.php?id=$id'>削除</a></td>";
                                 echo "</tr>";
                             }
                         }
-
                         //データベースとの接続を切る
                         mysqli_close($link);
-
-
                         ?>
                  </tbody>
              </table>
