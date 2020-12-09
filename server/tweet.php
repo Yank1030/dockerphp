@@ -50,13 +50,13 @@
                      <?php
                         $link = mysqli_connect('db-host', 'root', 'password', 'mydb');
 
-                        if (!$link) {
-                            echo "データベース接続失敗" . PHP_EOL;
-                            echo "errno: " . mysqli_connect_errno() . PHP_EOL;
-                            echo "error: " . mysqli_connect_error() . PHP_EOL;
-                            exit;
-                        }
-                        echo 'データベース接続成功';
+                        // if (!$link) {
+                        //     echo "データベース接続失敗" . PHP_EOL;
+                        //     echo "errno: " . mysqli_connect_errno() . PHP_EOL;
+                        //     echo "error: " . mysqli_connect_error() . PHP_EOL;
+                        //     exit;
+                        // }
+                        // echo 'データベース接続成功';
 
                         //クエリを実行するためのデフォルトのデータベースを選択
                         //mysqli_select_db($link, "mydb"); ← mysqli_connectにすでに入っている

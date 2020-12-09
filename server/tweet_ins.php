@@ -48,30 +48,54 @@
 
         <div class="table-responsive">
             <p>ここにツイートを表示する。</p>
-            <?php
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>名前</th>
+                        <th>投稿内容</th>
+                        <th>投稿時間</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
 
-            $link = mysqli_connect("db-host", "root", "password", "mydb");
-            $contents = $_GET["contents"];
+                    $link = mysqli_connect("db-host", "root", "password", "mydb");
+                    $contents = $_GET["contents"];
 
-            $len = mb_strlen($contents, "utf-8");
+                    $len = mb_strlen($contents, "utf-8");
 
-            if ($len == 0) {
-                echo "空白です";
-            } else if ($len > 140) {
-                echo "文字数オーバーです";
-            } else {
-                //testというデータベースに対してSQLを実行する 
-                mysqli_query($link, 'INSERT tweet(name, contents, input_datetime)values("kei", "' . $contents . '" , sysdate())');
+                    if ($len == 0) {
+                        echo "空白です";
+                    } else if ($len > 140) {
+                        echo "文字数オーバーです";
+                    } else {
+                        mysqli_query($link, 'INSERT tweet(name, contents, input_datetime)values("kei", "' . $contents . '" , sysdate())');
 
-                echo "ツイートしました";
-            }
+                        $rs = mysqli_query($link, 'SELECT * FROM tweet order by input_datetime');
 
-            //データベースとの接続を切る
-            mysqli_close($link);
+                        while (true) {
+                            //取得した行に対応する連想配列を返す
+                            $row = mysqli_fetch_assoc($rs);
+                            if ($row == null) {
+                                break;
+                            } else {
+                                echo "<tr>";
+                                echo "<td>{$row['name']}</td>";
+                                echo "<td>{$row['contents']}</td>";
+                                echo "<td>{$row['input_datetime']}</td>";
+                                echo "</tr>";
+                            }
+                        }
+                        echo "ツイートしました";
+                    }
 
-            ?>
+                    //データベースとの接続を切る
+                    mysqli_close($link);
 
+                    ?>
 
+                </tbody>
+            </table>
         </div>
     </div>
 </body>
