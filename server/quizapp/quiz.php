@@ -50,9 +50,12 @@ $question = array(
         <input type="submit" value="回答">
     </form>
 
-    <?php for ($i = 0; $i < count($question); $i++) {
+    <?php
+    for ($i = 0; $i < count($question); $i++) {
         if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST["ans$i"])) {
             $result = "不正解です";
+            echo $_POST["ans$i"];
+            echo $question[$i]['ans'];
             if ($_POST["ans$i"] == $question[$i]['ans']) {
                 $result = "正解です";
             }
