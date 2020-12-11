@@ -40,18 +40,15 @@
     $rs1 = mysqli_query($link, 'SELECT * FROM quiz order by id asc');
     $rs2 = mysqli_query($link, 'SELECT count(*) as num FROM quiz');
     $qn = mysqli_fetch_assoc($rs2);
-    for ($i = 1; $i <= $qn["num"] + 1; $i++) {
+    for ($i = 0; $i < $qn["num"] + 1; $i++) {
         $rows = mysqli_fetch_assoc($rs1);
         if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST["ans$i"])) {
             $result = "不正解です";
-            echo "取得数", $qn["num"];
-            var_dump($_POST["ans$i"]);
-            echo "入力値：", $_POST["ans$i"];
             if ($_POST["ans$i"] == $rows['ans']) {
                 $result = "正解です";
             }
             if (isset($result)) :
-                echo "<p>問", $i, ":", $result, "</p>";
+                echo "<p>問", $i + 1, ":", $_POST["ans$i"], " ", $result, "</p>";
             endif;
         }
     }
