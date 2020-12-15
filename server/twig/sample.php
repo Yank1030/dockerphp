@@ -12,4 +12,3 @@ $data = array(
     'message'  => 'My Webpage!',
 );
 echo $template->render($data);
-?>

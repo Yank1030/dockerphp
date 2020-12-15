@@ -1,0 +1,7 @@
+<select name="sample_select">
+    {% for index in 1..data|length %} {% set data_index = "sample_" ~ index %}
+    <option value="{{attribute(data, data_index)}}">
+        {{attribute(data, data_index)}}
+    </option>
+    {% endfor %}
+</select>

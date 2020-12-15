@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>商品一覧</title>
+  </head>
+  <body>
+    <table border="1" width="500" cellspacing="0" cellpadding="5" bordercolor="#333333">
+      <tr>
+        <th>商品名</th>
+        <th>価格</th>
+      </tr>
+      {#  フルーツの価格一覧を表示する #}
+      {% for item in items %}
+        <tr>
+          <td>{{ item.name }}</td>
+          <td>{{ item.price }}</td>
+        </tr>
+      {% endfor %}
+    </table>
+  </body>
+</html>

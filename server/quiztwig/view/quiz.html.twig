@@ -1,0 +1,31 @@
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{title}}</title>
+</head>
+
+<body>
+    <h1>{{title}}:{{question}}</h1>
+
+    <ul>
+    <input type="radio"name="choice">{{choice1}}<br>
+    <input type="radio"name="choice">{{choice2}}<br>
+    <input type="radio"name="choice">{{choice3}}<br>
+    <input type="radio"name="choice">{{choice4}}<br>
+    </ul>
+
+    <input type="submit" value="回答">
+
+    {% for questions in question %}
+    {% if $_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST["ans$i"]))){
+    {%  if ($_POST["ans$i"] == $question[$i]['ans'])%}
+    echo "正解です";
+    {% endif %}
+    {% if (isset($result)):%}
+    {% endif %}
+}
+
+</body>
+
+</html>
