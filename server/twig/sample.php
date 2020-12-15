@@ -8,14 +8,14 @@ $twig = new \Twig\Environment($loader);
 $template = $twig->load('sample.html.twig');
 
 
-$data2 = array(
+$test = array(
     'title' => 'sample2',
-    'message'  => 'My Webpage2!',
+    'message'  => 'My Webpage2',
 );
 
 $data = array(
     'title' => 'sample',
     'message'  => 'My Webpage!',
-    'data' => $data2
+    'data' => $test
 );
 echo $template->render($data);
