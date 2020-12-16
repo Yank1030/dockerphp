@@ -1,31 +1,14 @@
-<html lang="ja">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{title}}</title>
-</head>
-
-<body>
-    <h1>{{title}}:{{question}}</h1>
-
+{% block body %}
+<form action="" method="post">
+    {% for i in 1..3 %}
+    {% set questions = _context['question'~ i] %}
+    {{ questions.questionnum}}:{{questions.question}}
     <ul>
-    <input type="radio"name="choice">{{choice1}}<br>
-    <input type="radio"name="choice">{{choice2}}<br>
-    <input type="radio"name="choice">{{choice3}}<br>
-    <input type="radio"name="choice">{{choice4}}<br>
+        {% for key,value in questions.choices %}
+            <input type="radio"name={{questions.ans}} value={{value}}>{{value}}<br>
+        {% endfor %}
     </ul>
-
+    {% endfor %}
     <input type="submit" value="回答">
-
-    {% for questions in question %}
-    {% if $_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST["ans$i"]))){
-    {%  if ($_POST["ans$i"] == $question[$i]['ans'])%}
-    echo "正解です";
-    {% endif %}
-    {% if (isset($result)):%}
-    {% endif %}
-}
-
-</body>
-
-</html>
+    </form>
+{% endblock body %}
