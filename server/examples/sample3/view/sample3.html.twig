@@ -1,0 +1,32 @@
+{% if success_msg %}
+    <p style="color:#089900;">
+        {{success_msg}}
+    </p>
+{% endif %}
+ 
+{% for value in error_msgs %}
+    <p style="color:#f00;">
+        {{value}}
+    </p>
+{% endfor %}
+ 
+<HR>
+ 
+<p style="color:#ff8200;">
+    »» 今までの投稿一覧 ««
+</p>
+ 
+{% for value in posted_data %}
+    [ NAME ]
+    <br>
+    <span class="text">
+        {{value.name}}
+        <br>
+    </span>
+    [ COMMENT ]
+    <br>
+    <span class="text">
+        {{value.comment}}
+        <br><br>
+    </span>
+{% endfor %}

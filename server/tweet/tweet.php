@@ -37,7 +37,6 @@
      </div>
      <div class="col-md-9">
          <div class="table-responsive">
-             <p>ここにツイートを表示する。</p>
              <table class="table table-striped">
                  <thead>
                      <tr>
@@ -50,18 +49,6 @@
                  <tbody>
                      <?php
                         $link = mysqli_connect('db-host', 'root', 'password', 'mydb');
-
-                        // if (!$link) {
-                        //     echo "データベース接続失敗" . PHP_EOL;
-                        //     echo "errno: " . mysqli_connect_errno() . PHP_EOL;
-                        //     echo "error: " . mysqli_connect_error() . PHP_EOL;
-                        //     exit;
-                        // }
-                        // echo 'データベース接続成功';
-
-                        //クエリを実行するためのデフォルトのデータベースを選択
-                        //mysqli_select_db($link, "mydb"); ← mysqli_connectにすでに入っている
-                        //データベース上でクエリを実行
                         $rs = mysqli_query($link, 'SELECT * FROM tweet order by input_datetime desc');
 
                         while (true) {
