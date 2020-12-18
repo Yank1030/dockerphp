@@ -1,76 +1,73 @@
-<!DOCTYPE html>
- <html lang="ja">
+<html lang="ja">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>{{message.title}}</title>
+		<!-- Bootstrap core CSS -->
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	</head>
 
- <head>
-     <meta charset="UTF-8">
-     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-     <title>{{title}}</title>
-     <!-- Bootstrap core CSS -->
-     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
- </head>
+	<body>
+		<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+			<div class="container-fluid">
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+						<span class="sr-only">Toggle navigation</span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+					<a class="navbar-brand" href="tweet.php">Twitter風掲示板</a>
+				</div>
+			</div>
+		</nav>
 
- <body>
-     <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-         <div class="container-fluid">
-             <div class="navbar-header">
-                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
-                     aria-expanded="false" aria-controls="navbar">
-                     <span class="sr-only">Toggle navigation</span>
-                     <span class="icon-bar"></span>
-                     <span class="icon-bar"></span>
-                     <span class="icon-bar"></span>
-                 </button>
-                 <a class="navbar-brand" href="tweet.php">{{title}}</a>
-             </div>
-         </div>
-     </nav>
+		<div class="col-md-3">
+			<form action="tweet_ins.php" method="GET"><br>
+				ツイート内容を入力してください<br>
+				<textarea name="contents" cols="40" rows="4"></textarea>
+				<br>
+				<input type="submit" value="ツイート" class="btn btn-primary">
+			</form>
+			{% if sucmessage %}
+				<p style="color:#089900;">
+					{{sucmessage}}
+				</p>
+			{% endif %}
 
-     <div class="col-md-3">
-         <form action="tweet_ins.php" method="GET"><br>
-             {{insertwarning}}<br>
-             <textarea name="contents" cols="40" rows="4"></textarea>
-             <br>
-             <input type="submit" value="ツイート" class="btn btn-primary">
-         </form>
-     </div>
-     <div class="col-md-9">
-         <div class="table-responsive">
-             <table class="table table-striped">
-                 <thead>
-                    {% block body %}
-                     <tr>
-
-                     {% for key,value in tweettitle %}
-                         <th>{{value}}</th>
-                         <th>"なんじゃこりゃ"</th>
-                    {% endfor %}
-                     </tr>
-                     <tr>
-                        {% for key,value in dbsdata %}
-                         <th>{{value}}</th>
-                         <th>"なんじゃこりゃ"</th>
-                    {% endfor %}
-                     </tr>
-                     {% endblock body %}
-                 </thead>
-                 <tbody>
-                 </tbody>
-             </table>
-         </div>
-     </div>
-
-
-     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
-     </script>
-     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-         integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
-     </script>
-     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
-     </script>
-
- </body>
-
- </html>
+			{% for value in errmessage %}
+				<p style="color:#f00;">
+					{{value}}
+				</p>
+			{% endfor %}
+		</div>
+		<div class="col-md-9">
+			<div class="table-responsive">
+				<table class="table table-striped">
+					<thead>
+						<tr>
+							{% for key,value in tweettitle %}
+								<th>{{value}}</th>
+							{% endfor %}
+						</tr>
+					</thead>
+					<tbody>
+						{% for key,value in dbsdata %}
+							<tr>
+								<td>{{value.name}}</td>
+								<td>{{value.contents}}</td>
+								<td>{{value.input_datetime}}</td>
+								<td>
+									<a href='tweet_del.php?id={{value.id}}'>{{tweettitle.delete}}</a>
+								</td>
+							</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+			</div>
+		</div>
+		<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+	</body>
+</html></div>

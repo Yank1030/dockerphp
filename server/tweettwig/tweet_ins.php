@@ -14,17 +14,8 @@ $tweettitle = array(
     'delete' => '削除',
 );
 
-$message = array(
-    'title' => 'Twitter風掲示板',
-    'insertwarning' => 'ツイート内容を入力してください',
-);
-
-$data = array(
-    'teettitle' => $tweettitle,
-    'message' => $message,
-);
-
-echo $template->render($data);
+$dbsdata = array();
+$errmessage = array();
 
 $link = mysqli_connect("db-host", "root", "password", "mydb");
 $contents = $_GET["contents"];
@@ -32,12 +23,12 @@ $contents = $_GET["contents"];
 $len = mb_strlen($contents, "utf-8");
 
 if ($len == 0) {
-    echo "空白です";
+    $err_message['err_empty'] = "空白です";
 } else if ($len > 140) {
-    echo "文字数オーバーです";
+    $err_message['err_over_length'] = "文字数オーバーです";
 } else {
     mysqli_query($link, 'INSERT tweet(name, contents, input_datetime)values("kei", "' . $contents . '" , sysdate())');
-    echo "ツイートしました";
+    $suc_message = "ツイートしました";
 }
 
 
@@ -49,17 +40,18 @@ while (true) {
     if ($row == null) {
         break;
     } else {
-        echo "<th>";
-        echo "<tr>";
-        echo "<td>{$row['name']}</td>";
-        echo "<td>{$row['contents']}</td>";
-        echo "<td>{$row['input_datetime']}</td>";
-        $id = $row["id"];
-        echo "<td><a href='tweet_del.php?id=$id'>削除</a></td>";
-        echo "</tr>";
-        echo "</th>";
+        array_push($dbsdata, $row);
     }
 }
 
 //データベースとの接続を切る
 mysqli_close($link);
+
+echo $template->render(
+    array(
+        'tweettitle' => $tweettitle,
+        'errmessage' => $err_message,
+        'sucmessage' => $suc_message,
+        'dbsdata' => $dbsdata,
+    )
+);

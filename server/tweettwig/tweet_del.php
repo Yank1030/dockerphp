@@ -7,13 +7,17 @@ $twig = new \Twig\Environment($loader);
 
 $template = $twig->load('tweet.html.twig');
 
-echo $_GET['id'];
-
 $link = mysqli_connect("db-host", "root", "password", "mydb");
 
 $id = $_GET['id'];
 
-mysqli_query($link, "DELETE from tweet where id = $id");
+if (!$id) {
+    $err_message['err_no_id'] = "データがありません";
+} else {
+    mysqli_query($link, "DELETE from tweet where id = $id");
+    $suc_message = "削除しました";
+}
+
 
 $tweettitle = array(
     'name' => '名前',
@@ -22,35 +26,32 @@ $tweettitle = array(
     'delete' => '削除',
 );
 
-$message = array(
-    'title' => 'Twitter風掲示板',
-    'insertwarning' => 'ツイート内容を入力してください',
-);
-
-$data = array(
-    'teettitle' => $tweettitle,
-    'message' => $message,
-);
-
-echo $template->render($data);
-
 $sql = "SELECT * from tweet order by input_datetime desc";
 //echo $sql;
+
+$dbsdata = array();
 
 //この１行で実行
 $rs = mysqli_query($link, $sql);
 
-while ($row = mysqli_fetch_assoc($rs)) {
-    echo "<th>";
-    echo "<tr>";
-    echo "<td>{$row['name']}</td>";
-    echo "<td>{$row['contents']}</td>";
-    echo "<td>{$row['input_datetime']}</td>";
-    $id = $row["id"];
-    echo "<td><a href='tweet_del.php?id=$id'>削除</a></td>";
-    echo "</tr>";
-    echo "</th>";
+while (true) {
+    //取得した行に対応する連想配列を返す
+    $row = mysqli_fetch_assoc($rs);
+    if ($row == null) {
+        break;
+    } else {
+        array_push($dbsdata, $row);
+    }
 }
 
 //データベースとの接続を切る
 mysqli_close($link);
+
+echo $template->render(
+    array(
+        'tweettitle' => $tweettitle,
+        'errmessage' => $err_message,
+        'sucmessage' => $suc_message,
+        'dbsdata' => $dbsdata,
+    )
+);

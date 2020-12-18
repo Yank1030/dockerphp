@@ -1,7 +1,7 @@
 <?php
 
 //DBへ接続
-$com = mysqli_connect('db-host', 'root', 'password', 'mysql');
+$com = mysqli_connect('db-host', 'root', 'password', 'mydb');
 
 if ($com !== false) {
     //変数を初期化
@@ -39,8 +39,11 @@ if ($com !== false) {
             $name = mysqli_real_escape_string($com, $name);
             $comment = mysqli_real_escape_string($com, $comment);
 
+            //sqlの発行
+            $sql = "INSERT INTO post(name,comment)VALUES('$name','$comment')";
+
             //sqlの実行
-            $result = mysqli_query($com, 'INSERT post(name, comment)VALUES(\$name,\$comment)');
+            $result = mysqli_query($com, $sql);
 
             //結果メッセージ
             if ($result !== false) {

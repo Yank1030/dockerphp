@@ -14,19 +14,7 @@ $tweettitle = array(
     "delete" => "削除",
 );
 
-$message = array(
-    "title" => "Twitter風掲示板",
-    "insertwarning" => "ツイート内容を入力してください",
-);
-
 $dbsdata = array();
-
-$data = array(
-    'teettitle' => $tweettitle,
-    'message' => $message,
-);
-
-print_r($tweettitle);
 
 $link = mysqli_connect('db-host', 'root', 'password', 'mydb');
 $rs = mysqli_query($link, 'SELECT * FROM tweet order by input_datetime desc');
@@ -37,17 +25,15 @@ while (true) {
     if ($row == null) {
         break;
     } else {
-        $dbsdata += array(
-            'name' => $row['name'],
-            'contents' => $row['contents'],
-            'input_datetime' => $row['input_datetime'],
-        );
-
-        $id = $row["id"];
-        echo "<td><a href='tweet_del.php?id=$id'>削除</a></td>";
+        array_push($dbsdata, $row);
     }
 }
 //データベースとの接続を切る
 mysqli_close($link);
 
-echo $template->render($data);
+echo $template->render(
+    array(
+        'tweettitle' => $tweettitle,
+        'dbsdata' => $dbsdata,
+    )
+);
