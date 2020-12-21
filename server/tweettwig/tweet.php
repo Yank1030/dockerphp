@@ -31,6 +31,8 @@ while (true) {
 //データベースとの接続を切る
 mysqli_close($link);
 
+print_r($dbsdata);
+
 echo $template->render(
     array(
         'tweettitle' => $tweettitle,

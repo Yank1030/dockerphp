@@ -1,0 +1,24 @@
+body {
+    text-align: center;
+  }
+  
+  /* index.html */
+  
+  input.btn {
+    padding: 15px 40px;
+    font-size: 1rem;
+    color: #fff;
+    border-style: none;
+    background-color: #911;
+  }
+  
+  input.btn.stop {
+    background-color: #191;
+  }
+  
+  /* result.php */
+  .rankin {
+    color: #f55;
+    font-size: 1.4rem;
+  }
+  

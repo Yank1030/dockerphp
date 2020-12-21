@@ -13,7 +13,6 @@ toggle.addEventListener('click', function (event) {
     } else {
         timerEnd();
         getResult();
-        status = 'start';
     }
 });
 
@@ -22,7 +21,7 @@ function timerStart() {
     startTime = new Date().getTime();
     timer = setInterval(function () {
         time = (new Date().getTime() - startTime) / 1000;
-        document.getElementById('timer').textContent = time.toFixed(3);
+        //document.getElementById('timer').textContent = time.toFixed(3);
     }, 10);
 }
 
@@ -33,4 +32,13 @@ function timerEnd() {
 
 function getResult() {
     alert(time + ' 秒でした！');
+    var result = Math.abs(targetTime - time);
+
+    // 結果をサーバーへ送信
+    var form = document.createElement('form');
+    form.action = "result.php";
+    form.method = "post";
+    form.innerHTML = "<input name='result' type='hidden' value='" + result + "'>";
+    document.body.appendChild(form); // FireFox & IE 対策 (HTML内にformがないとsubmitが動かない)
+    form.submit();
 }

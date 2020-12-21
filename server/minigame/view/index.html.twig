@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>体内時計</title>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width,initial-scale=1">
+		<link rel="stylesheet" href="style.css">
+	</head>
+
+	<body>
+		<div class="container">
+			<h1>体内時計: 誤差の少なさランキング</h1>
+			{# <?php $flg = false; ?>
+						<?php foreach ($ranking as $rank => $time) : ?>
+						<?php if ($time === $result && !$flg) : ?>
+						<p class="rankin"><?php echo ($rank + 1) ?>位:
+						<?php echo number_format($time, 3, '.', ',');
+						$flg = true; ?>
+						秒 ランクイン！</p>
+						<?php else : ?>
+						<p><?php echo ($rank + 1) ?>位:
+						<?php echo number_format($time, 3, '.', ','); ?>
+						秒</p>
+						<?php endif ?>
+						<?php endforeach; ?>
+						<?php if (!$flg) {
+						echo '<p>あなたの誤差: ' . number_format($result, 3, '.', ',') . ' 秒 (ランキング圏外)</p>';
+						} ?> #}
+			{% for i in 0..5 %}
+				<p>{{ranking[i]}}</p>
+			{% endfor %}
+			<p>
+				<a href="index.html">戻る</a>
+			</p>
+		</div>
+	</body>
+</html></body></html>
