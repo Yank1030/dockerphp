@@ -28,8 +28,9 @@
 						<?php if (!$flg) {
 						echo '<p>あなたの誤差: ' . number_format($result, 3, '.', ',') . ' 秒 (ランキング圏外)</p>';
 						} ?> #}
-			{% for i in 0..5 %}
-				<p>{{ranking[i]}}</p>
+			{% set show_max_rank = 5 %}
+			{% for i in 0..show_max_rank %}
+				<p>{{i+1}}位：{{ranking[i]}}</p>
 			{% endfor %}
 			<p>
 				<a href="index.html">戻る</a>
